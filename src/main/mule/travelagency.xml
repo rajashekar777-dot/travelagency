@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd"></mule>
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="78e5bffa-f8fd-4285-bc73-d250ec878141" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<flow name="travelagencyFlow" doc:id="ec3e7cec-5e8e-4aca-9fb7-d70b54965e00" >
+		<http:listener doc:name="Listener" doc:id="3bd8020a-50b2-4bd1-be16-ef25dd85864a" config-ref="HTTP_Listener_config" path="/testapi"/>
+		<logger level="INFO" doc:name="start Logger" doc:id="b527f0eb-0642-433d-b29f-8232650b6c9f" message="start logger"/>
+		<ee:transform doc:name="Transform Message" doc:id="4a2dd136-b924-4e4a-8785-651298407ec6" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="testApi" ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message" : "build succesfull",
+	"statusCode" : 200
+}]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<logger level="INFO" doc:name="end Logger" doc:id="1740aec1-4324-4ce8-a15b-7e4c2f1ccf69" message="end Logger #[vars.testApi]"/>
+	</flow>
+</mule>
