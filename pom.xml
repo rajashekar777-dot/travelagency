@@ -99,5 +99,15 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
+	
+	 <distributionManagement>
+        <repository>
+            <!-- This ID must match a server ID in your settings.xml -->
+            <id>MuleRepository</id>
+            <name>Mule Repository</name>
+            <url>https://maven.anypoint.mulesoft.com/api/v3/organizations/2eadeefb-9158-4fd9-9c96-d4c856cbc60f/maven</url>
+            <layout>default</layout>
+        </repository>
+    </distributionManagement>
 
 </project>
